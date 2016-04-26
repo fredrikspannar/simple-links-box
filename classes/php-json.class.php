@@ -8,6 +8,8 @@ class php_json {
 	private $_store =  "data/links.json";
 	private $_deleted = "data/deleted_links.json";
 	
+	private $_validate_error = "";
+	
 	function __construct(){
 		// does the directory exist?
 		if ( file_exists("data") == FALSE ) {
@@ -74,12 +76,31 @@ class php_json {
 		return json_decode($data);
 	}
 
-	public function append($new) {
+	private function _validate_and_sanitize($new) {
+		
+		// reset error
+		$this->_validate_error = "";
+		
 		// validate new
-		if ( !is_array($new) ) return 'Not an array';
-		if ( !isset($new['id']) ) return 'Missing "id"';
-		if ( !isset($new['title']) ) return 'Missing "title"';		
-		if ( !isset($new['link']) ) return 'Missing "link"';
+		if ( !is_array($new) ) {
+			$this->_validate_error = 'Not an array';
+			return false;
+		}
+		
+		if ( !isset($new['id']) ) {
+			$this->_validate_error = 'Missing "id"';
+			return false;
+		}
+		
+		if ( !isset($new['title']) ) {
+			$this->_validate_error = 'Missing "title"';		
+			return false;
+		}
+		
+		if ( !isset($new['link']) ) {
+			$this->_validate_error = 'Missing "link"';
+			return false;
+		}
 		
 		// simple sanitize
 		$new['id'] = strip_tags($new['id']);
@@ -87,9 +108,38 @@ class php_json {
 		$new['link'] = strip_tags($new['link']);
 		
 		// more validation
-		if ( !is_string($new['id']) ) return '"id" is not a string';
-		if ( !is_string($new['title']) ) return '"title" is not a string';		
-		if ( !is_string($new['link']) ) return '"link" is not a string';
+		if ( !is_string($new['id']) ) { 
+			$this->_validate_error = '"id" is not a string';
+			return false;
+		}
+		
+		if ( !is_string($new['title']) ) {
+			$this->_validate_error = '"title" is not a string';		
+			return false;
+		}
+		
+		if ( !is_string($new['link']) ) {
+			$this->_validate_error = '"link" is not a string';
+			return false;
+		}
+	
+		if ( strpos($new['link'], 'http://') !== 0 && strpos($new['link'], 'https://') !== 0 ) {
+			$this->_validate_error = '"link" is not a valid URL';
+			return false;
+		}	
+		
+		// else all ok
+		return $new;
+	}
+
+	public function append($new) {
+
+		// validate
+		$new = $this->_validate_and_sanitize($new);
+		if ( $new === false ) {
+			// return error
+			return $this->_validate_error;
+		}
 		
 		// read file
 		$data = $this->get();
@@ -152,6 +202,45 @@ class php_json {
 	
 		// all ok
 		return true;
+	}
+
+
+	public function update($upd_link) {
+		
+		// validate
+		$upd_link = $this->_validate_and_sanitize($upd_link);
+		if ( $upd_link === false ) {
+			// return error
+			return $this->_validate_error;
+		}	
+		
+		// read current storage
+		$store = $this->get();		
+		
+		// match id and then update
+		$update_found = false;
+		for($n=0; $n<count($store); $n++) {
+
+			// match id
+			if ( $store[$n]->id == $upd_link['id'] ) {
+				// update
+				$store[$n]->title = $upd_link['title'];
+				$store[$n]->link = $upd_link['link'];				
+				
+				// set flag
+				$update_found = true;
+			} 
+		}
+		
+		// update done?
+		if ( $update_found === false ) return '"id" not found';
+		
+		// usave to file
+		$store = json_encode($store);
+		file_put_contents($this->_store, $store);
+	
+		// all ok
+		return true;	
 	}
 
 }

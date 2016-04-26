@@ -28,11 +28,7 @@ the project into. This will add a basic login.
 
 ![Screenshot 3](https://raw.githubusercontent.com/fredrikspannar/simple-links-box/master/images/screenshots/screenshot-3.jpg)
 
-![Screenshot responsive 1](https://raw.githubusercontent.com/fredrikspannar/simple-links-box/master/images/screenshots/screenshot-4.jpg)
-
-![Screenshot responsive 2](https://raw.githubusercontent.com/fredrikspannar/simple-links-box/master/images/screenshots/screenshot-5.jpg)
-
-![Screenshot responsive 3](https://raw.githubusercontent.com/fredrikspannar/simple-links-box/master/images/screenshots/screenshot-6.jpg)
+![Screenshot responsive 1](https://raw.githubusercontent.com/fredrikspannar/simple-links-box/master/images/screenshots/screenshot-4.jpg) ![Screenshot responsive 2](https://raw.githubusercontent.com/fredrikspannar/simple-links-box/master/images/screenshots/screenshot-5.jpg) ![Screenshot responsive 3](https://raw.githubusercontent.com/fredrikspannar/simple-links-box/master/images/screenshots/screenshot-6.jpg)
 
 ## Future releases
 * Categories

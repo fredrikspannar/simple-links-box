@@ -36,7 +36,7 @@ Confirmation when deleting a link.
 
 ![Screenshot responsive 1](https://raw.githubusercontent.com/fredrikspannar/simple-links-box/master/images/screenshots/screenshot-4.jpg) ![Screenshot responsive 2](https://raw.githubusercontent.com/fredrikspannar/simple-links-box/master/images/screenshots/screenshot-5.jpg) ![Screenshot responsive 3](https://raw.githubusercontent.com/fredrikspannar/simple-links-box/master/images/screenshots/screenshot-6.jpg)
 
-Responsive screenshots when views from a smartphone.
+Responsive screenshots when viewing from a smartphone.
 
 ![Screenshot 7](https://raw.githubusercontent.com/fredrikspannar/simple-links-box/master/images/screenshots/screenshot-7.jpg)
 
@@ -47,3 +47,8 @@ Press the cog in the left upper corner to edit a link. Press the red circle with
 * Add a screenshot service (third-party) for the added link
 * Restore deleted links
 * Settings? Themes?
+
+## Photocredit
+Photographer:	danist soh
+Site:           [stocksnap.io](http://stocksnap.io)
+Direct link:    [https://stocksnap.io/photo/KS9ZVV7VLT](https://stocksnap.io/photo/KS9ZVV7VLT)

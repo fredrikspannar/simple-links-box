@@ -229,7 +229,12 @@ class php_json {
 				
 				// set flag
 				$update_found = true;
+			
+				// exit loop since we're done
+				break;
+				
 			} 
+			
 		}
 		
 		// update done?

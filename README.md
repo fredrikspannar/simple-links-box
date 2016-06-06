@@ -21,7 +21,7 @@ Basic authentication.
 I would suggest that you add Basic authentication with your webhosts control panel for the directory you have uploaded
 the project into. This will add a basic login.
 
-## Screenshots
+## Screenshots ( version 0.0.1 - no categories)
 ![Screenshot 1](https://raw.githubusercontent.com/fredrikspannar/simple-links-box/master/images/screenshots/screenshot-1.jpg)
 
 Startpage showing all links.
@@ -43,10 +43,12 @@ Responsive screenshots when viewing from a smartphone.
 Press the cog in the left upper corner to edit a link. Press the red circle with the x in the right upper corner to delete a link.
 
 ## Future releases
-* Categories
 * Add a screenshot service (third-party) for the added link
-* Restore deleted links
-* Settings? Themes?
+* Restore deleted links(?)
+
+## Changelog
+Version 0.0.2 - Added categories, list all categories on home and list links in category, and last but not least Javascript validation of forms
+Version 0.0.1 - First version with basics only. Links has no category, no support for screenshot service.
 
 ## Photocredit
 Photographer:	danist soh

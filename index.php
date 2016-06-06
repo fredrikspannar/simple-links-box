@@ -5,21 +5,17 @@ require(__DIR__ . DIRECTORY_SEPARATOR . "classes" . DIRECTORY_SEPARATOR . "php-j
 $pj = new php_json();
 
 // init vars
-$error = "";
-$message = "";
+$error = $message = "";
 
-// any post
-if ( !empty($_POST['delete_id']) ) {
+// get all categories
+$cats = $pj->get_categories();
 
-  // delete link
-	$result = $pj->delete($_POST['delete_id']);
-	
-	// any error?
-	if ( $result !== TRUE ) {
-		$error = $result;	
-	} else {
-		$message = 'Link has been deleted!';
-	}
+// failed to get?
+if ( !is_array($cats) ) {
+	$error = "<strong>Error:</strong> Failed to get categories - ".(is_string($cats) ? $cats : 'Unkown error');
+
+  // set as empty array so the code below works
+  $cats = array();
 }
 
 ?>
@@ -37,7 +33,6 @@ if ( !empty($_POST['delete_id']) ) {
         
         <script src="lib/jquery/dist/jquery.min.js" type="text/javascript"></script>
         <script src="lib/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="js/links-box.js" type="text/javascript"></script>        
     </head>
     <body>
 
@@ -68,7 +63,7 @@ if ( !empty($_POST['delete_id']) ) {
 
         		    <?php if ( !empty($error) ): ?>
             			<div class="alert alert-danger">
-            			    <strong>Error deleting link</strong> <?php echo $error; ?>
+            			    <?php echo $error; ?>
             			</div>
         		   <?php elseif ( !empty($message) ) : ?>
             			<div class="alert alert-success">
@@ -76,37 +71,30 @@ if ( !empty($_POST['delete_id']) ) {
             			</div>
         		   <?php endif; ?>
             		   
-            			<h3>Links in storage</h3>
+            			<h3>All categories in storage</h3>
                                 
             			<?php
-            
-                  // get all links
-            			$links = $pj->get();
             			
-            			if ( empty($links) ): ?>
+            			if ( empty($cats) ): ?>
             
-            				<strong>None found.</strong>
+            				<strong>None found, add a link with a category first.</strong>
             
             			<?php else: ?>
-            
-            				<ul class="link-list">
-            				<?php foreach($links as $l):
-            
-            				    $image = ( !isset($l->image) || empty($l->image) ? 'images/empty-site.jpg' : $l->image);
-            				    ?>
-            
-            					<li>
-            					    <a href="edit.php?id=<?php echo $l->id; ?>" title="Edit '<?php echo $l->title; ?>'" class="edit-link"></a>
-            					    <a href="javascript:void(0);" class="remove-link" title="Delete '<?php echo $l->title; ?>'" data-title="<?php echo $l->title; ?>" data-id="<?php echo $l->id; ?>"></a>
-            					    <a href="<?php echo $l->link; ?>"  title="Open '<?php echo $l->title; ?>'" class="image-link" target="_blank">
-            					        <img src="<?php echo $image; ?>">
-            					        <?php echo $l->title; ?>
-            					   </a>
-            					</li>
-            
-            				<?php endforeach; ?>
-            				</ul>
-            
+    
+                        <div class="link-category">
+                          
+                  				<ul>
+                  				<?php foreach($cats as $c): ?>
+      
+                    					<li>
+                    					    <a href="category.php?id=<?php echo $c->id; ?>"><?php echo $c->name; ?></a>
+                    					</li>
+                            
+                  				<?php endforeach; ?>
+                  				</ul>
+                  				
+                				</div>
+                    
             			<?php endif; ?>
 
                 </div>        
@@ -114,25 +102,5 @@ if ( !empty($_POST['delete_id']) ) {
             
         </div>    
   
-      <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Modal title</h4>
-          </div>
-          <div class="modal-body">
-            <p>One fine body&hellip;</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-cancel btn-danger" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-confirm btn-success">Proceed</button>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->      
-
-    <form class="delete-form" action="index.php" method="post"><input type="hidden" id="delete_id" name="delete_id" value=""><input type="submit"></form>
-
     </body>
 </html>

@@ -6,11 +6,11 @@
  */
 class php_json {
 
-	private $_store =  "data/TEST-links.json";
-	private $_deleted = "data/TEST-deleted_links.json";
+	private $_store =  "data/links.json";
+	private $_deleted = "data/deleted_links.json";
 	
-	private $_category_store =  "data/TEST-categories.json";
-	private $_category_deleted = "data/TEST-deleted_categories.json";
+	private $_category_store =  "data/categories.json";
+	private $_category_deleted = "data/deleted_categories.json";
 	
 	private $_validate_error = "";
 	
